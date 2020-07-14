@@ -1,4 +1,18 @@
+#pragma once
 #include <hl.type.h>
+
+
+
+
+int strf_u32(char *buffer, char *b_end, const char *format, const char *f_end, u32 value);
+int strf_s32(char *buffer, char *b_end, const char *format, const char *f_end, s32 value);
+
+
+
+
+
+
+/*
 
 char *U32ToString(const char *format, u32 value);
 
@@ -75,7 +89,7 @@ char * hlsFormat(const char format, ...)
 	//? 符号位 一定有符号+/-
 	//?=x 符号替换位 ﹣/原来的位	?/signed/c
 	//| 对齐符 只能放在最左或最右？
-	//* 全值符 整个内容
+	//\ * 全值符 整个内容
 
 
 	"{xxzz}"	//0100|		z!=0
@@ -114,3 +128,5 @@ char * hlsFormat(const char format, ...)
 	"bool"	//bool
 
 }
+
+*/

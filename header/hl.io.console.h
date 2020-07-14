@@ -1,16 +1,19 @@
 #pragma once
 #include <hl.type.h>
-#include <hl.io.keyboard.h>	//还是不引入为好
+//#include <hl.io.keyboard.h>	//还是不引入为好
 
 
+//int hlcsWriteA(const char *format, ...);
 
-int hlcsWriteA(const char *format, ...);
-
+int hlcsWriteA(const char *format, const char *type, ...);
 
 int hlcsWriteLineA(const char *format, ...);
 
 
+
 char *hlcsReadLineA();
+
+typedef enum hlKeyCode hlKeyCode;
 
 enum hlKeyCode hlcsReadKey();
 
@@ -32,6 +35,24 @@ float hlcsTryReadFloat(char *pfloat);
 
 
 
+
+//{i:|?__-.--}
+//{i<1:|?__-.--}
+//{f:|?__-.--}
+//{s:|?__-.--}
+
+
+
+//{|?__-.--}
+//{0:|?__-.--}
+//{2:|?__-.--}
+
+//"f,s,i,u,ul,ff"
+
+//hlWriteLineA("The '{} of '{} is: '{3:?__-.--}", "s,s,i", str1, str2, v1);
+//hlWriteLineA("The {1} of {} is: {3:?__-.--}", "s,s,i", str1, str2, v1);
+//hlWriteLineA("The [1] of [] is: [3]{?__-.--}", "s,s,i", str1, str2, v1);
+//hlWriteLineA("The @1 of @ is: @3{?__-.--}, 123@@mail.com", "s,s,i", str1, str2, v1);
 
 
 

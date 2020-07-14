@@ -19,6 +19,9 @@ int sys_open(const char *path, int access, int flags);
 //3
 int sys_close(int fd);
 
+//5
+int sys_fstat(int fd, void *stat);
+
 //8
 sreg sys_seek(int fd, sreg offset, int mode);
 

@@ -1,16 +1,24 @@
 #pragma once
 
+
+//手动定义系统的寄存器位宽
+#define _XBW 64
+
+#if _XBW == 64
+#define _X64
+#endif
+
 #ifndef _X64
 typedef signed long sreg;
 typedef unsigned long ureg;
-#define _XLEN 4
-#define _XBIT 2
+#define _XSHIFT 2
 #else
 typedef signed long long sreg;
 typedef unsigned long long ureg;
-#define _XLEN 8
-#define _XBIT 3
+#define _XSHIFT 3
 #endif
+
+#define _XLEN (1 << _XSHIFT)
 
 typedef unsigned char bool; //单字节布尔值
 typedef unsigned char byte;

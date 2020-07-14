@@ -24,7 +24,6 @@ Bool hlmeFree(void *space)
 
 //------------------------------------//
 
-
 void *hlmeNewClear(t_size size)
 {
 	void *space = hlmeNew(size);
@@ -42,7 +41,7 @@ void *hlmeNewCopy(const void *source, t_size size)
 {
 	void *space = hlmeNew(size);
 	return_null_if_null(space);
-	hlmeCopyR(space, source, size);
+	hlmeCopy(source, space, size);
 	return space;
 }
 
@@ -68,39 +67,58 @@ void *hlmeResize(void *space, t_size newSize)
 
 void hlmeCopy(const void *source, void *destination, t_size size)
 {
-	t_size count_align = size >> _XBIT;
-	t_size count_rm = size - (count_align << _XBIT);
-	for (t_size i = 0; i < count_align; i++)
+	void *end_align = destination + ((size >> _XSHIFT) << _XSHIFT);
+	void *end_rm = destination + size;
+
+	while (destination != end_align)
 	{
-		((ureg *)destination)[i] = ((ureg *)source)[i];
+		*(ureg *)destination = *(ureg *)source;
+		destination += sizeof(ureg);
+		source += sizeof(ureg);
 	}
-	for (t_size i = 0; i < count_rm; i++)
+
+	while (destination != end_rm)
 	{
-		((byte *)destination)[i] = ((byte *)source)[i];
+		*(u8 *)destination = *(u8 *)source;
+		++destination;
+		++source;
 	}
 }
 
-void hlmeCopyR(void *destination, const void *source, t_size size)
-{
-	hlmeCopy(source, destination, size);
-}
 
-void hlmeFill(void *source, char ch, t_size count)
+void hlmeFill(void *dest, char ch, t_size count)
 {
-	for(t_size i=0; i<count; i++)
+	ureg com = ch;
+	com = (com <<  8) | com;
+	com = (com << 16) | com;
+	if(sizeof(ureg) > 4)
+		com = (com << 32) | com;
+
+	t_size count_align = count >> _XSHIFT;
+	void *end = ((ureg *)dest) + count_align;
+	while (dest != end)
 	{
-		((u8*)source)[i] = ch;
+		*(ureg *)(dest++) = com;
+	}
+
+	t_size count_rm = count - (count_align << _XSHIFT);
+	end = ((char *)dest) + count_rm;
+	while (dest != end)
+	{
+		*(char *)(dest++) = ch;
 	}
 }
+
 
 void hlmeClear(void *source, t_size size)
 {
 	hlmeFill(source, 0, size);
 }
 
+
 Bool hlmeIsEqual(const void *source1, const void *source2, t_size size)
 {
-	for(t_size i=0; i<size; i++)
+	for(t_size i = 0; i < size; i++)
 	{
 		if(((u8*)source1 + i) != ((u8*)source2 + i)) return FALSE;
 	}

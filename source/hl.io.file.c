@@ -23,10 +23,12 @@ struct hlFile *hlfOpen(const struct hlPath *path, enum hlFileAccess permission)
 struct hlFile *hlfOpenEx(const struct hlPath *path, enum hlFileAccess permission, int share_type)
 {
     int access = (int)permission - 1;
-    int cmode = 0;  //Create Mode 只在创建文件时有效
+    //create mode is only valid while creating file.
+    int cmode = 0;
 
     int fd = hl_file_open(path->str, access, cmode);
-    if(fd == -1) return NULL;
+    //why sometimes fd is -2?
+    if(fd < 0) return NULL; 
 
     return _hlCreateFile(fd, path, NULL);
 }
@@ -51,6 +53,7 @@ struct hlFile *hlfCreateEx(const struct hlPath *path, int share_type, enum hlFil
 
 Bool hlfClose(struct hlFile *file)
 {
+    //返回-1为FALSE, 0为TRUE.
     return !hl_file_close(file->id);
 }
 

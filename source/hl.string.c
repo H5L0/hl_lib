@@ -68,7 +68,7 @@ hlStringA *hlsaCopyCharsInLen(hlStringA *str, const char *chars, int length)
 	//}
 	
 	//复制内容
-	hlmeCopyR(str->chars, chars, length + 1);
+	hlmeCopy(chars, str->chars, length + 1);
 	//str->length = length;
 	return str;
 }
@@ -95,8 +95,8 @@ hlStringA *hlsaConnect(hlStringA *outstr, const hlStringA *str1, const hlStringA
 	if(!_hlsaResize(outstr, slen)) return NULL;
 
 	outstr->length = slen;
-	hlmeCopyR(outstr->chars, str1->chars, str1->length);
-	hlmeCopyR(outstr->chars + str1->length, str2->chars, str2->length);
+	hlmeCopy(str1->chars, outstr->chars, str1->length);
+	hlmeCopy(str2->chars, outstr->chars + str1->length, str2->length);
 	return outstr;
 }
 
@@ -109,9 +109,9 @@ hlStringA *hlsaInsert(hlStringA *outstr, const hlStringA *str, const hlStringA* 
 	int slen = str->length + word->length;
 	if(!_hlsaResize(outstr, slen)) return NULL;
 
-	hlmeCopyR(outstr->chars, str->chars, pos);
-	hlmeCopyR(outstr->chars + pos, word->chars, word->length);
-	hlmeCopyR(outstr->chars+ pos + word->length, str->chars + pos, str->length - pos);
+	hlmeCopy(str->chars, outstr->chars, pos);
+	hlmeCopy(word->chars, outstr->chars + pos, word->length);
+	hlmeCopy(str->chars + pos, outstr->chars + pos + word->length, str->length - pos);
 
 	return outstr;
 }

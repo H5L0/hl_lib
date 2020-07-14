@@ -1,7 +1,7 @@
 #include <hl.io.filestream.h>
 #include <hl.system.memory.h>
 
-const int _defalut_buffer_size = (1 << 12);
+const int _default_buffer_size = (1 << 12);
 
 
 struct hlFileStream *hlfsCreate(struct hlFile *file)
@@ -13,8 +13,8 @@ struct hlFileStream *hlfsCreate(struct hlFile *file)
 	return_null_if_null(fs);
 	fs->file = file;
 	//Get Page Size
-	fs->_buffer = hlmeNew(_defalut_buffer_size);
-	//fs->_buffer_capcity = _defalut_buffer_size;
+	fs->_buffer = hlmeNew(_default_buffer_size);
+	//fs->_buffer_capcity = _default_buffer_size;
 	fs->_buffer_count = 0;
 	fs->_buffer_pos = 0;
 	fs->_pointer = 0;
@@ -72,10 +72,12 @@ t_addr hlfsMovePointer(struct hlFileStream *fs, t_offset offset)
 	return position;
 }
 
+
+
 t_size _hlfs_read_raw(struct hlFileStream *fs, void *buffer, t_size size)
 {
 	//直接从文件读取剩余部分
-	if (size >= _defalut_buffer_size)
+	if (size >= _default_buffer_size)
 	{
 		int rn = hlfRead(fs->file, buffer, size);
 		fs->_pointer += rn;
@@ -84,7 +86,9 @@ t_size _hlfs_read_raw(struct hlFileStream *fs, void *buffer, t_size size)
 	//先从文件读取到缓存区
 	else
 	{
-		int rn = hlfRead(fs->file, fs->_buffer, _defalut_buffer_size);
+		int rn = hlfRead(fs->file, fs->_buffer, _default_buffer_size);
+		//Read to end.
+		if(rn == 0) return 0;
 
 		//*读到文件末尾时, 长度可能不足
 		t_size copy_size = rn < size ? rn : size;
@@ -153,7 +157,7 @@ t_size hlfsRead(struct hlFileStream *fs, void *buffer, t_size size)
 	//Check File
 
 	//区分文件指针在缓存区头前/后的情况
-	if (fs->_buffer_pos < fs->_pointer)
+	if (fs->_pointer < fs->_buffer_pos)
 	{
 		return _hlfs_read_front(fs, buffer, size);
 	}
@@ -176,7 +180,7 @@ t_size hlfsRead(struct hlFileStream *fs, void *buffer, t_size size)
 t_size _hlfsReadBareLand(struct hlFileStream *fs, void *buffer, t_size size)
 {
 	//直接从文件读取剩余部分
-	if (size >= _defalut_buffer_size)
+	if (size >= _default_buffer_size)
 	{
 		int rn = hlfRead(fs->file, buffer, size);
 
@@ -187,7 +191,7 @@ t_size _hlfsReadBareLand(struct hlFileStream *fs, void *buffer, t_size size)
 	//先从文件读取到缓存区
 	else
 	{
-		int rn = hlfRead(fs->file, fs->_buffer, _defalut_buffer_size);
+		int rn = hlfRead(fs->file, fs->_buffer, _default_buffer_size);
 
 		//读到文件末尾时, 长度可能不足*
 		t_size copy_size = rn < size ? rn : size;

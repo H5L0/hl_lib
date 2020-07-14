@@ -13,8 +13,12 @@ int hl_file_close(int fd)
 	return sys_close(fd);
 }
 
-int hl_file_rename();
 
+
+int hl_file_get_info(int fd, struct hl_stat *finfo)
+{
+	return sys_fstat(fd, finfo);
+}
 
 int hl_file_write(int fd, const void *data, int size)
 {

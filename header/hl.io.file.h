@@ -11,6 +11,8 @@ enum hlFileAccess
     e_fa_Read  = 0b001,
     e_fa_Write = 0b010,
     e_fa_RW    = 0b011,
+
+    //efaRead, efpUser
 };
 
 enum hlFilePermission

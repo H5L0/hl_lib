@@ -2,6 +2,9 @@
 #include <hl.type.h>
 #include <hl.macro.bit.h>
 
+//**改名为hl.os.io.h
+
+
 enum hlkFileAccessFlag
 {
 	ek_faT_ReadOnly  = 0,
@@ -59,13 +62,75 @@ int hl_file_open(const char *path, enum hlkFileAccessFlag access, enum hlkFileCr
 //失败返回-1, 成功返回0
 int hl_file_close(int fd);
 
-//失败返回-1, 成功返回新位置
-sreg hl_file_seek(int fd, sreg offset, int mode);
 
 int hl_file_rename();
 
-int hl_file_flush();
+
+struct hl_stime
+{
+	s64 seconds;
+	u32 nanoseconds;
+	u32 __padding_32;
+};
+
+/*
+[00] 07 08 00 00 00 00 00 00 divice      64
+[01] 7d 8d 01 00 00 00 00 00 ino         64
+[02] 01 00 00 00 00 00 00 00 mode  nlink 32
+[03] ff 81 00 00 e8 03 00 00 uid   gid   32
+[04] e8 03 00 00 00 00 00 00 rdev?
+[05] 00 00 00 00 00 00 00 00 padding?
+[06] 09 00 00 00 00 00 00 00 size        64
+[07] 00 10 00 00 00 00 00 00 block_size  64/32 padding
+[08] 01 00 00 00 00 00 00 00 block_count 64/32 padding
+[09] d1 21 0b 5f 00 00 00 00 atime       64
+[10] 74 28 04 19 00 00 00 00
+[11] f2 0f 0b 5f 00 00 00 00 mtime       64
+[12] e0 b1 50 18 00 00 00 00
+[13] f2 0f 0b 5f 00 00 00 00 ctime       64
+[14] e0 b1 50 18 00 00 00 00
+*/
+
+struct hl_stat
+{
+	u64 device;     /* Device.  */
+	u64 ino;        /* File serial number.  */
+	u32 mode;       /* File mode.  */
+	u32 nlink;      /* Link count.  */
+
+	u32 uid;        /* User ID of the file's owner.  */
+	u32 gid;        /* Group ID of the file's group. */
+
+	u64 rdev;       /* Device number, if device.  */
+	u64 __pad1_64;
+
+	s64 size;       /* Size of file, in bytes.  */
+
+	s32 block_size; /* Optimal block size for I/O.  */
+	u32 __pad2_32;
+
+	u64 block_count;/* Number 512-byte blocks allocated. */
+
+	struct hl_stime atime; /* Time of last access.  */
+	struct hl_stime mtime; /* Time of last modification.  */
+	struct hl_stime ctime; /* Time of last status change.  */
+
+	u32 __unused[32];
+};
+
+
+
+//这个函数保证使用最新的stat函数, 结果为64位.
+//失败返回-1
+int hl_file_get_info(int fd, struct hl_stat *finfo);
+
+
+//失败返回-1, 成功返回新位置
+sreg hl_file_seek(int fd, sreg offset, int mode);
+
 
 int hl_file_write(int fd, const void *data, int size);
 
 int hl_file_read(int fd, void *buffer, int size);
+
+int hl_file_flush();

@@ -8,16 +8,18 @@
 #define return_false_if_false(expr) if(expr == FALSE) return FALSE
 
 
+#define ATT_MFUNC __attribute__((malloc))
+#define ATT_NOMO __attribute__((optimize("-fno-tree-loop-distribute-patterns")))
 
 //--------------------------- Memory Allcation ------------------------------//
 
-void *hlmeNew(t_size size);
+void *hlmeNew(t_size size) ATT_MFUNC;
 
-void *hlmeNewClear(t_size size);
+void *hlmeNewClear(t_size size) ATT_MFUNC;
 
-void *hlmeNewArray(t_size size_element, t_size length); //不会清零
+void *hlmeNewArray(t_size size_element, t_size length) ATT_MFUNC; //不会清零
 
-void *hlmeNewCopy(const void *source, t_size size);
+void *hlmeNewCopy(const void *source, t_size size) ATT_MFUNC;
 
 #define hlmeNewType(type) ((type*)hlmeNew(sizeof(type)))
 
@@ -50,10 +52,11 @@ Bool hlmeFree(void *space);	//return bool?
 
 //---------------------------- Memory Function ---------------------------//
 
-void hlmeCopyR(void *destination, const void *source, t_size size);
+//void hlmeCopyR(void *destination, const void *source, t_size size);
+
 void hlmeCopy(const void *source, void *destination, t_size size);
 
-void hlmeFill(void *source, char ch, t_size count);
+void hlmeFill(void *source, char ch, t_size count) ATT_NOMO;
 
 void hlmeClear(void *source, t_size size);
 

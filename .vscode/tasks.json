@@ -3,12 +3,10 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"label": "_C_Make_",
+			"label": "C Make",
 			"command": "make",
 			"args": [],
-			"options": {
-				//"cwd": "${workspaceFolder}"
-			},
+			"options": {},
 			"problemMatcher": [
 				"$gcc"
 			],
@@ -16,6 +14,22 @@
 				"kind": "build",
 				"isDefault": true
 			}
-		}
+		},
+		{
+			"type": "shell",
+			"label": "C Make: clean",
+			"command": "make clean",
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "ELF: run",
+			"command": "./test.elf",
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
 	]
 }
