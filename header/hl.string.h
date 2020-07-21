@@ -33,34 +33,47 @@ struct hlString{
 
 //-------------------------*hlsa*----------------------//
 
+//hlStringA *hlsNewNullA();
+//hlStringA *hlsNewA(const char *source);
+//hlsNewClampA()
+
+typedef enum
+{
+	hlsaFailed,
+	hlsaSuccess,
+}hlsaResult;
+
+
 hlStringA *hlsaNew();
 
-Bool hlsaFree(hlStringA *str);
+hlStringA *hlsaNewCopy(const char *chars);
 
-hlStringA *hlsaCopyChars(hlStringA *str, const char *chars);
+hlsaResult hlsaFree(hlStringA *str);
 
-hlStringA *hlsaCopyCharsInLen(hlStringA *str, const char *chars, int length);
+hlsaResult hlsaCopyChars(hlStringA *str, const char *chars);
 
-hlStringA *hlsaCopy(hlStringA *target, const hlStringA *source);
+hlsaResult hlsaCopyCharsInLen(hlStringA *str, const char *chars, int length);
 
-hlStringA *hlsaTrim(hlStringA *target, const hlStringA *source, int start, int length);
+hlsaResult hlsaCopy(hlStringA *target, const hlStringA *source);
 
-
-hlStringA *hlsaConnect(hlStringA *outstr, const hlStringA *str1, const hlStringA *str2);
-
-hlStringA *hlsaInsert(hlStringA *outstr, const hlStringA *str, const hlStringA* word, int pos);
-
-hlStringA *hlsaPlace(hlStringA *outstr, const hlStringA *str, const hlStringA* word, int pos);
-
-hlStringA *hlsaReplace(hlStringA outstr, const hlStringA *str, const hlStringA *word, int pos, int length);
+hlsaResult hlsaTrim(hlStringA *target, const hlStringA *source, int start, int length);
 
 
+hlsaResult hlsaConnect(hlStringA *outstr, const hlStringA *str1, const hlStringA *str2);
 
-int *hlsaFindChar(const hlStringA *str, char ch);
+hlsaResult hlsaInsert(hlStringA *outstr, const hlStringA *str, const hlStringA* word, int pos);
 
-int *hlsaFindChars(const hlStringA *str, const char * chars);
+hlsaResult hlsaPlace(hlStringA *outstr, const hlStringA *str, const hlStringA* word, int pos);
 
-int *hlsaFind(const hlStringA *str, const hlStringA *word);
+hlsaResult hlsaReplace(hlStringA outstr, const hlStringA *str, const hlStringA *word, int pos, int length);
+
+
+
+int hlsaFindChar(const hlStringA *str, char ch);
+
+int hlsaFindChars(const hlStringA *str, const char * chars);
+
+int hlsaFind(const hlStringA *str, const hlStringA *word);
 
 //FindLast
 //FindAll
@@ -82,40 +95,10 @@ int hlsaSplit(hlStringA ** pArray, const hlStringA *str, char separator);
 
 
 
-
-char *hlsaAt(hlStringA *str, int index); //= str.chars[index]
+//char hlsGet(hlStringA *str, int index);
+char hlsaAt(hlStringA *str, int index); //= str.chars[index]
 
 int hlsaLength(hlStringA *str);
-
-int hlGetCharsLength(const char *chars);
-
-
-//*---------------*//
-
-hlStringA *hlsNewNullA();
-
-hlStringA *hlsNewA(const char *source);
-
-hlStringA *hlsNewByLengthA(const char *source, int length);
-
-hlStringA *hlsNewCopyA(const hlStringA *str);
-
-hlStringA *hlsCopyA(hlStringA *target, const hlStringA *source);
-
-hlStringA *hlsTrim(const hlStringA *str, int start, int length);
-
-hlCharA *hlsAt(hlStringA *str, int index);
-
-
-
-
-
-
-
-
-
-
-
 
 
 

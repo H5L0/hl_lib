@@ -4,16 +4,26 @@
 
 int hlStart()
 {
-	
-	hlcsWriteA("----------\n", NULL);
 
-	hlcsWriteA("[{0}] Print \"{:?______}\".\n", "i,ui", 12, 1234);
+	hlcsWriteA("----------\n", NULL, NULL);
 
-	int ch = hlcsReadChar();
+	//void *args[] = {12, 1234};
+	//hlcsWriteA("[{0}] Print \"{:?=___--}\".\n", "i,ui", args);
 
-	hlcsWriteA("Input char is {0}\n","i", ch);
+	//int ch = hlcsReadChar();
 
-	hlcsWriteA("----------\n", NULL);
+	//hlcsWriteA("Input char is {0}\n","i", ch);
+
+
+	hlcsWriteA("(String,Integer) [{s:|_____________}] x=[{ui:__--}]\n", "String Test", 12, 123);
+
+	hlcsWriteA("(Pointer) [{p:0x--------}]\n", "Pointer");
+
+	hlcsWriteA("(中文测试) [{s:注释_______}]\n", "是中文");
+
+	hlcsWriteA("(Float) [{f:--.--___}]\n", 123.456f);
+
+	hlcsWriteA("----------\n", NULL, NULL);
 
 	return 0;
 }

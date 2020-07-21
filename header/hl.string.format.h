@@ -1,39 +1,31 @@
 #pragma once
 #include <hl.type.h>
+#include <hl.string.h>
 
 
+//int hlsFormat(char *buffer, int bsize, const char *format, ...);
+
+//hlsU32ToString();
+//hlsFromU32(); hlsNewFormU32()
+//hlsToU32();
+//hlsFormatU32();  *
+//hlsTryParse();
+//hlsParseU32();
+
+//foramt: "|?--__"
+hlStringA *hlsFormatU32(const char *format, u32 value);
+
+bool hlsParseU32(hlStringA *str, int start, int end);
+
+bool hlsTryParseU32(hlStringA *str, int start, int end, u32 *pvalue);
 
 
-int strf_u32(char *buffer, char *b_end, const char *format, const char *f_end, u32 value);
-int strf_s32(char *buffer, char *b_end, const char *format, const char *f_end, s32 value);
-
-
+hlStringA *hlsFormat(const char *format, ...);
 
 
 
 
 /*
-
-char *U32ToString(const char *format, u32 value);
-
-char *S32ToString(const char *format, s32 value);
-
-char *U64ToString(const char *format, u64 value);
-
-char *S64ToString(const char *format, s64 value);
-
-//char *PointerToString(t_addr value);
-char *HexToString(ureg value);
-
-char *FloatToString(float value);
-
-char *DoubleToString(double value);
-
-
-
-
-char * hlsFormat(const char format, ...)
-{
 	//默认右对齐，左空格
 	"   8", "[i:4]"
 	"   8", "[i:#4]"

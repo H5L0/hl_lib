@@ -1,4 +1,4 @@
-
+/*
 
 #include <hl.linux.console.h>
 #include <hl.linux.syscall.h>
@@ -28,4 +28,4 @@ int hl_console_read(const char *buffer)
 }
 
 
-
+*/

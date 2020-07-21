@@ -3,15 +3,20 @@
 //#include <hl.io.keyboard.h>	//还是不引入为好
 
 
-//int hlcsWriteA(const char *format, ...);
+int hlcsWriteVA(const char *format, const char *type, void **args);
 
-int hlcsWriteA(const char *format, const char *type, ...);
+//char *hlcsReadLineNA();
+
+
+int hlcsWriteA(const char *format, ...);
 
 int hlcsWriteLineA(const char *format, ...);
 
 
+bool hlcsRead(char *buffer, int length);
 
-char *hlcsReadLineA();
+int hlcsReadLineA(char *buffer, int bsize);
+
 
 typedef enum hlKeyCode hlKeyCode;
 

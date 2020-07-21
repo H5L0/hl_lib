@@ -4,15 +4,20 @@ TARGET = test.elf
 
 BUILD = build
 
-INCLUDE = header _kernel/h
+INCLUDE = header kernel/h
 
 FOLDER_CFILE_COM = source
-FOLDER_CFILE_LX = _kernel/s_linux
+FOLDER_CFILE_LX = kernel/s_linux
 
 
 CFILE_COM = \
  hl.startup.c\
  hl.system.memory.c\
+ hl.chars.c\
+ hl.chars.format.c\
+ hl.chars.format.int.c\
+ hl.chars.format.text.c\
+ hl.chars.format.va.c\
  hl.string.c\
  hl.string.format.c\
  hl.io.path.c\
