@@ -126,6 +126,7 @@ int hlcf_integer_align_right(
 	return n;
 }
 
+
 int hlcf_integer(
 	char *buffer,
 	char *buffer_end,
@@ -143,8 +144,8 @@ int hlcf_integer(
 	}
 	else 
 	{
-		format = "*";
-		format_end = format + 1;
+		format = "-*";
+		format_end = format + 2;
 	}
 
 	//format == NULL || format[0] =='\0' || format[0] == '|'
@@ -158,7 +159,7 @@ int hlcf_u32(char *buffer, char *b_end, const char *format, const char *f_end, u
 	char raws[12];
 	char *praw = raws + 11;
 	*praw = '\0';
-	while (value != 0)
+	while (value != 0) //如果先do则0也有一位
 	{
 		char n = value % 10;
 		value = value / 10;

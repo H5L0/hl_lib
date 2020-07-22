@@ -1,49 +1,73 @@
+#pragma once
 #include <hl.io.file.h>
-//**分离 file 和 file-io
+#include <hl.io.stream.h>
 
 
-//
-/*FileStream / TextStream / ConsoleStream*/
 
-typedef struct hlFileStream hlFileStream;
 
-struct hlFileStream
+//------------------- File Writer ---------------------//
+
+typedef struct
 {
+	const struct hlWriteStream *stream;
+
 	hlFile *file;
+
 	char *_buffer;
 
-	t_addr _pointer;
-
+	t_addr _stream_pos;
 	t_addr _buffer_pos;
-
-	int _buffer_count;
-
-	//int _buffer_capcity;
-	//int _buffer_offset;
-	//int _offset;
-
-};
+	int _buffer_capcity;
+	//int _buffer_count;
+	
+}hlFileWriter;
 
 
-struct hlFileStream *hlfsCreate(struct hlFile *);
 
-t_size hlfsRead(struct hlFileStream *fs, void *buffer, t_size size);
+hlFileWriter *hlfwCreate(struct hlFile *file);
 
-t_size hlfsWrite(struct hlFileStream *fs, void *data, t_size size);
+t_offset hlfwSetPointer(hlFileWriter *fw, t_offset offset, enum hlStreamSeekMode mode);
 
-//t_size hlfsSetPointer(struct hlFileStream, t_offset, enum hlFileSeekMode);
+t_offset hlfwGetPointer(hlFileWriter *fw);
 
-//设置文件流的指针位置, 绝对地址, 负数offset代表从末尾设定
-t_size hlfsSetPointer(struct hlFileStream *, t_offset);
+int hlfwWrite(hlFileWriter *fw, const void *data, int size);
 
-t_size hlfsGotoEnd(struct hlFileStream *);
+Bool hlfwFlush(hlFileWriter *fw);
 
-t_size hlfsMovePointer(struct hlFileStream *, t_offset);
+Bool hlfwRelease(hlFileWriter *fw);
 
-t_size hlfsGetPointer(struct hlFileStream *);
 
-Bool hlfsFlush(struct hlFileStream *);
 
-Bool hlfsClose(struct hlFileStream *);
+//------------------- File Reader ---------------------//
 
-Bool hlfsRelease(struct hlFileStream *);
+typedef struct
+{
+	const struct hlReadStream *stream;
+
+	hlFile *file;
+
+	char *_buffer;
+
+	t_addr _stream_pos;
+	t_addr _buffer_start;
+	t_addr _buffer_end;
+
+	int _buffer_capcity;
+	//int _buffer_count;
+	
+}hlFileReader;
+
+
+
+hlFileReader *hlfrCreate(struct hlFile *file);
+
+t_size hlfrRead(hlFileReader *stream, void *buffer, t_size size);
+
+t_offset hlfrSetPointer(hlFileReader *fr, t_offset offset, enum hlStreamSeekMode mode);
+
+t_offset hlfrGetPointer(hlFileReader *fr);
+
+Bool hlfrRelease(hlFileReader *fr);
+
+
+

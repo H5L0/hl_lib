@@ -28,11 +28,11 @@ int hlcsWriteVA(const char *format, const char *types, void **args)
 }
 */
 
+#include <hl.io.stream.h>
 
-hlStream *_hl_stdout;
-hlStream *_hl_stdin;
-hlstream *_hl_stderror;
-
+struct hlWriteStream *_hl_stdout;
+struct hlReadStream  *_hl_stdin;
+struct hlWriteStream *_hl_stderror;
 
 
 int hlcsWriteA(const char *format, ...)
@@ -45,8 +45,9 @@ int hlcsWriteA(const char *format, ...)
 	char buffer[4096];
 	int count = hlcf_vlist(buffer, buffer + 4096, format, list);
 
-	//return hl_file_write(0, buffer, count);
+	return hl_file_write(0, buffer, count);
 
+	/*
 	int lastEnter = FindLastEnter();
 
 	if(lastEnter != -1)
@@ -57,6 +58,7 @@ int hlcsWriteA(const char *format, ...)
 
 	int wcount2 = hlfsWrite(_hl_stdout, buffer + lastEnter, count - lastEnter);
 	return wcount1 + wcount2;
+	*/
 }
 
 
@@ -73,11 +75,18 @@ int hlcsWriteLineA(const char *format, ...)
 	if(count == 4096) buffer[4095] = '\n';
 	else buffer[count] = '\n';
 
-	//return hl_file_write(0, buffer, count);
+	return hl_file_write(0, buffer, count);
 
-	int wcount = hlfsWrite(_hl_stdout, buffer + lastEnter, count - lastEnter);
-	hlfsFlush(_hl_stdout);
-	return wcount;
+	/*
+	_hl_stdout->WriteLineFormatVA(_hl_stdout, format, list);
+	//_hl_stdout->Write(_hl_stdout, buffer, count);
+
+	_hl_stdout->Flush(_hl_stdout);
+	return count;
+
+	//int wcount = hlfsWrite(_hl_stdout, buffer + lastEnter, count - lastEnter);
+	//hlfsFlush(_hl_stdout);
+	*/
 }
 
 

@@ -54,7 +54,7 @@ Bool hlfDelete(struct hlPath *path);
 //...block/count
 int hlfRead(struct hlFile *file, void *buffer, int length);
 
-int hlfWrite(struct hlFile *file, void *data, int length);
+int hlfWrite(struct hlFile *file, const void *data, int length);
 
 enum hlFileSeekMode
 {

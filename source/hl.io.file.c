@@ -64,7 +64,7 @@ int hlfRead(struct hlFile *file, void *buffer, int length)
     return hl_file_read(file->id, buffer, length);
 }
 
-int hlfWrite(struct hlFile *file, void *data, int length)
+int hlfWrite(struct hlFile *file, const void *data, int length)
 {
     return hl_file_write(file->id, data, length);
 }

@@ -9,6 +9,7 @@ INCLUDE = header kernel/h
 FOLDER_CFILE_COM = source
 FOLDER_CFILE_LX = kernel/s_linux
 
+CFILE_TEST = test/hl.test.fsr.c
 
 CFILE_COM = \
  hl.startup.c\
@@ -23,9 +24,9 @@ CFILE_COM = \
  hl.io.path.c\
  hl.io.fileinfo.c\
  hl.io.file.c\
- hl.io.filestream.c\
- hl.io.console.c\
- hl.test.strf.c
+ hl.io.filestream.writer.c\
+ hl.io.filestream.reader.c\
+ hl.io.console.c
 
 
 CFILE_LX = hl.linux.memory.c hl.linux.io.c
@@ -42,9 +43,10 @@ MDFAGS = -MMD -MP -MF $*.d $(CFLAGS)
 
 ARG_INCLUDE = $(foreach dir,$(INCLUDE),-I$(dir))
 
-CFILES = \
+CFILES = $(CFILE_TEST) \
 	$(foreach dir,$(CFILE_COM),$(FOLDER_CFILE_COM)/$(dir)) \
-	$(foreach dir,$(CFILE_LX),$(FOLDER_CFILE_LX)/$(dir))
+	$(foreach dir,$(CFILE_LX),$(FOLDER_CFILE_LX)/$(dir)) \
+	
 
 ASMFILES = $(foreach dir,$(ASMFILE_LX),$(FOLDER_CFILE_LX)/$(dir))
 
