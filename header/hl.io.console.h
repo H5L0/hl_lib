@@ -3,9 +3,8 @@
 //#include <hl.io.keyboard.h>	//还是不引入为好
 
 
-int hlcsWriteVA(const char *format, const char *type, void **args);
-
-//char *hlcsReadLineNA();
+Bool hlcsInit();
+Bool hlcsRelease();
 
 
 int hlcsWriteA(const char *format, ...);
@@ -30,7 +29,6 @@ int hlcsReadInt();
 float hlcsReadFloat();
 
 
-
 bool hlcsTryReadChar(char *pchar);
 
 bool hlcsTryReadInt(char *pint);
@@ -40,6 +38,7 @@ float hlcsTryReadFloat(char *pfloat);
 
 
 
+//int hlcsWriteVA(const char *format, const char *type, void **args);
 
 //{i:|?__-.--}
 //{i<1:|?__-.--}

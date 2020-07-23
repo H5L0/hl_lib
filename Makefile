@@ -9,7 +9,7 @@ INCLUDE = header kernel/h
 FOLDER_CFILE_COM = source
 FOLDER_CFILE_LX = kernel/s_linux
 
-CFILE_TEST = test/hl.test.fsr.c
+CFILE_TEST = test/hl.test.strf.c
 
 CFILE_COM = \
  hl.startup.c\
@@ -26,6 +26,7 @@ CFILE_COM = \
  hl.io.file.c\
  hl.io.filestream.writer.c\
  hl.io.filestream.reader.c\
+ hl.io.textstream.writer.c\
  hl.io.console.c
 
 
@@ -70,7 +71,7 @@ OFILES = $(patsubst %c, %o, $(CFILES)) $(patsubst %s, %o, $(ASMFILES))
 
 $(TARGET): $(OFILES)
 	@$(CC) $(LFLAGS) $(OFILES) -o $(TARGET)
-#@rm -fr -v $(OFILES)
+	@rm -fr -v $(OFILES)
 	@echo ==== Compile Success ====
 
 #@echo ==== Running: $(TARGET) =====

@@ -2,7 +2,7 @@
 #include <hl.system.memory.h>
 
 
-static const struct hlReadStream _hl_fc_stream_reader = 
+static const struct hlReadStreamFC _hl_fc_stream_reader = 
 {
 	(t_size   (*)(struct hlReadStream *, void *, t_size)) hlfrRead,
 	(t_offset (*)(struct hlReadStream *, t_offset, enum hlStreamSeekMode)) hlfrSetPointer,
@@ -21,7 +21,7 @@ hlFileReader *hlfrCreate(struct hlFile *file)
 	hlFileReader *fr = (hlFileReader*)hlmeNew(sizeof(hlFileReader));
 	return_null_if_null(fr);
 
-	fr->stream = &_hl_fc_stream_reader;
+	fr->stream.fc = &_hl_fc_stream_reader;
 
 	fr->file = file;
 

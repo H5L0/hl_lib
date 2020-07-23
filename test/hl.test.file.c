@@ -6,7 +6,7 @@
 
 int hlStart()
 {
-	hlPath *path = hlCreatePath("./file.txt");
+	hlPath *path = hlCreatePath("./test/file.txt");
 	hlFile *file = hlfOpen(path, e_fa_RW);
 	hlcsWriteA("Open File<0x{p}>: {i}\n", file, file->id);
 

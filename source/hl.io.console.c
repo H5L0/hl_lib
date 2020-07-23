@@ -1,94 +1,85 @@
 #include <hl.io.console.h>
+#include <hl.io.stream.h>
+#include <hl.io.filestream.h>
+#include <hl.io.textstream.h>
+//#include <hl.kernel.io.h>
+
 #include <hl.chars.h>
 #include <hl.chars.format.h>
-#include <hl.kernel.io.h>
-
 
 #include <hl.macro.vargs.h>
 
-//hl_console_write_buffer();
-//hl_console_write_direct();
+#include <hl.system.memory.h>
 
 
-/*
-int hlcsWriteVA(const char *format, const char *types, void **args)
+
+bool _hlcs_have_init = FALSE;
+
+hlTextWriter *hl_std_output;   //stream hl_output
+hlTextReader  *hl_std_input;    //stream hl_input
+hlTextWriter *hl_std_error;    //stream hl_error
+
+
+
+
+Bool hlcsInit()
 {
-	//void ** args_array[32];
-	//va_list list;
-	//list->
+	if(_hlcs_have_init) return FALSE;
 
-	if(format == NULL || *format == '\0') return 0;
-	if(types == NULL) return hl_file_write(0, format, hl_chars_length(format) + 1);
+	//Create file.
+	//hlFile *f_stdout = hlfOpenStandard("");
+	hlFile *f_stdout = (hlFile*)hlmeNew(sizeof(hlFile));
+	f_stdout->id = 0;
 
-	char buffer[4096];
+	//Create file writer.
+	//hlFileWriter *fw_stdout = hlfwCreate(f_stdout);
 
-	int count = strf_vargs(buffer, buffer + 4096, format, types, args);
+	//Create text writer from file writer.
+	hl_std_output = hltwCreateFromFile(f_stdout);
+	hl_std_output->flush_mode = em_tsflush_line;
 
-	return hl_file_write(0, buffer, count);
+	return TRUE;
 }
-*/
 
-#include <hl.io.stream.h>
 
-struct hlWriteStream *_hl_stdout;
-struct hlReadStream  *_hl_stdin;
-struct hlWriteStream *_hl_stderror;
+Bool hlcsFlush()
+{
+	return hltwFlush(hl_std_output);
+}
+
+
+Bool hlcsRelease()
+{
+	hlcsFlush();
+
+	hltwRelease(hl_std_output);
+	hl_std_output = NULL;
+
+	return TRUE;
+}
+
+
 
 
 int hlcsWriteA(const char *format, ...)
 {
-	if(format == NULL || *format == '\0') return 0;
-
 	va_list list;
 	va_start(list, format);
 
-	char buffer[4096];
-	int count = hlcf_vlist(buffer, buffer + 4096, format, list);
-
-	return hl_file_write(0, buffer, count);
-
-	/*
-	int lastEnter = FindLastEnter();
-
-	if(lastEnter != -1)
-	{
-		int wcount1 = hlfsWrite(_hl_stdout, buffer, lastEnter);
-		hlfsFlush(_hl_stdout);
-	}
-
-	int wcount2 = hlfsWrite(_hl_stdout, buffer + lastEnter, count - lastEnter);
-	return wcount1 + wcount2;
-	*/
+	return hltwWriteFormatVA(hl_std_output, format, list);
 }
 
 
 int hlcsWriteLineA(const char *format, ...)
 {
-	if(format == NULL || *format == '\0') return 0;
-
 	va_list list;
 	va_start(list, format);
 
-	char buffer[4096];
-	int count = hlcf_vlist(buffer, buffer + 4096, format, list);
-
-	if(count == 4096) buffer[4095] = '\n';
-	else buffer[count] = '\n';
-
-	return hl_file_write(0, buffer, count);
-
-	/*
-	_hl_stdout->WriteLineFormatVA(_hl_stdout, format, list);
-	//_hl_stdout->Write(_hl_stdout, buffer, count);
-
-	_hl_stdout->Flush(_hl_stdout);
-	return count;
-
-	//int wcount = hlfsWrite(_hl_stdout, buffer + lastEnter, count - lastEnter);
-	//hlfsFlush(_hl_stdout);
-	*/
+	return hltwWriteLineFormatVA(hl_std_output, format, list);
 }
 
+
+/*
 
 char *hlcsReadLineNA()
 {
@@ -123,3 +114,6 @@ int hlcsReadChar()
 	if(rcount != 1) return 0;
 	else return ch;
 }
+
+
+*/

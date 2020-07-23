@@ -1,16 +1,24 @@
 #include <hl.kernel.memory.h>
 #include <hl.linux.syscall.h>
+#include <hl.io.console.h>
 
 
 int hl_init()
 {
 	hl_memory_init();
+
+//#if HL_LIB_INIT_CONSOLE
+	hlcsInit();
+//#endif
+
 	return 0;
 }
 
 
 int hl_clean()
 {
+	hlcsRelease();
+
 	return 0;
 }
 

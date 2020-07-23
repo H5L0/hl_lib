@@ -17,11 +17,11 @@ int hlStart()
 
 	hlcsWriteA("(String,Integer) [{s:|_____________}] x=[{ui:__--}]\n", "String Test", 12, 123);
 
-	hlcsWriteA("(Pointer) [{p:0x--------}]\n", "Pointer");
+	hlcsWriteLineA("(Pointer) [{p:0x--------}]", "Pointer");
 
 	hlcsWriteA("(中文测试) [{s:注释_______}]\n", "是中文");
 
-	hlcsWriteA("(Float) [{f:--.--___}]\n", 123.456f);
+	//hlcsWriteA("(Float) [{f:--.--___}]\n", 123.456f);
 
 	hlcsWriteA("----------\n", NULL, NULL);
 

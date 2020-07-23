@@ -9,7 +9,7 @@
 
 typedef struct
 {
-	const struct hlWriteStream *stream;
+	struct hlWriteStream stream;
 
 	hlFile *file;
 
@@ -42,7 +42,7 @@ Bool hlfwRelease(hlFileWriter *fw);
 
 typedef struct
 {
-	const struct hlReadStream *stream;
+	struct hlReadStream stream;
 
 	hlFile *file;
 
@@ -53,7 +53,6 @@ typedef struct
 	t_addr _buffer_end;
 
 	int _buffer_capcity;
-	//int _buffer_count;
 	
 }hlFileReader;
 
