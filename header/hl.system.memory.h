@@ -28,15 +28,16 @@ void *hlmeNewCopy(const void *source, t_size size) ATT_MFUNC;
 
 //传入NULL： 分配新空间
 //传入有效空间：
-//	调整大小失败：分配新空间
-//	调整大小成功：返回原空间地址
+//  调整大小失败: 分配新空间
+//  调整大小成功: 返回原空间地址
+//  重新分配空间: 复制内容,释放原空间,返回新空间
 void *hlmeResize(void *space, t_size newSize);
 
 
 //传入NULL：返回FALSE
 //传入有效空间：
-//	调整大小失败：返回FALSE
-//	调整大小成功：返回TRUE
+//  调整大小失败：返回FALSE
+//  调整大小成功：返回TRUE
 Bool hlmeResizeOnly(void *space, t_size newSize);
 
 

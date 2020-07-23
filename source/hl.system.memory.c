@@ -50,15 +50,30 @@ void *hlmeNewCopy(const void *source, t_size size)
 
 //传入NULL： 分配新空间
 //传入有效空间：
-//	调整大小失败：分配新空间
-//	调整大小成功：返回原空间地址
+//  调整大小失败: 分配新空间
+//  调整大小成功: 返回原空间地址
+//  重新分配空间: 复制内容,释放原空间,返回新空间
 void *hlmeResize(void *space, t_size newSize)
 {
-	if(space == NULL) return hlmeNew(newSize);
+	if(space == NULL)
+	{
+		return hlmeNew(newSize);
+	}
+	else if(hlmeResizeOnly(space, newSize))
+	{
+		return space;
+	}
 	else
 	{
-		if(hlmeResizeOnly(space, newSize)) return space;
-		else return hlmeNew(newSize);
+		void *newSpace = hlmeNew(newSize);
+		return_null_if_null(newSpace);
+
+		t_size oriSize = hl_mem_get_size(space);
+		hlmeCopy(space, newSpace, oriSize);
+
+		hlmeFree(space);
+		//if failed => hlmeFree(newSpace);
+		return newSpace;
 	}
 }
 
