@@ -24,9 +24,10 @@ CFILE_COM = \
  hl.io.path.c\
  hl.io.fileinfo.c\
  hl.io.file.c\
- hl.io.filestream.writer.c\
- hl.io.filestream.reader.c\
- hl.io.textstream.writer.c\
+ hl.io.filewriter.c\
+ hl.io.filereader.c\
+ hl.io.textwriter.c\
+ hl.io.textreader.c\
  hl.io.console.c
 
 

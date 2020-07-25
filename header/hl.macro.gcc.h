@@ -1,4 +1,4 @@
-
+#pragma once
 
 //nonnull (arg-index, …)
 

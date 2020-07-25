@@ -12,6 +12,7 @@
 #define ATT_NOMO __attribute__((optimize("-fno-tree-loop-distribute-patterns")))
 
 //--------------------------- Memory Allcation ------------------------------//
+//=> hlmmNew() hlmmCopy
 
 void *hlmeNew(t_size size) ATT_MFUNC;
 
@@ -62,30 +63,6 @@ void hlmeFill(void *source, char ch, t_size count) ATT_NOMO;
 void hlmeClear(void *source, t_size size);
 
 Bool hlmeIsEqual(const void *source1, const void *source2, t_size size);
-
-
-
-void hlmeAllocateHeap();
-void hlmeReleaseHeap();
-
-
-typedef void *hlHeap;
-
-
-void hlmeNewH(hlHeap heap, t_size);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

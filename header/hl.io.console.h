@@ -12,26 +12,26 @@ int hlcsWriteA(const char *format, ...);
 int hlcsWriteLineA(const char *format, ...);
 
 
-bool hlcsRead(char *buffer, int length);
+int hlcsReadA(char *buffer, int size);
 
-int hlcsReadLineA(char *buffer, int bsize);
+int hlcsReadLineA(char *buffer, int buffer_size);
 
+
+int hlcsReadChar();
 
 typedef enum hlKeyCode hlKeyCode;
 
 enum hlKeyCode hlcsReadKey();
 
 
-int hlcsReadChar();
-
 int hlcsReadInt();
 
 float hlcsReadFloat();
 
 
-bool hlcsTryReadChar(char *pchar);
+Bool hlcsTryReadChar(char *pchar);
 
-bool hlcsTryReadInt(char *pint);
+Bool hlcsTryReadInt(char *pint);
 
 float hlcsTryReadFloat(char *pfloat);
 

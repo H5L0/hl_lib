@@ -1,6 +1,9 @@
 #include <hl.io.filestream.h>
-
 #include <hl.macro.vargs.h>
+
+//...hl.io.stream.text.h
+//...hl.io.text.writer.h
+//...hl.io.writer.text.h
 
 
 //et_xxx : Type
@@ -18,6 +21,8 @@ enum hlTextLineBreak
 	et_lbrk_windows = et_lbrk_rn,
 };
 
+enum hlTextLineBreak hlGetSystemLineBreak();
+
 
 enum hlTextStreamFlushMode
 {
@@ -26,6 +31,7 @@ enum hlTextStreamFlushMode
 };
 
 
+//-------------------- Text Writer ---------------------//
 
 typedef struct
 {
@@ -45,11 +51,15 @@ hlTextWriter *hltwCreate(struct hlWriteStream *wstream);
 
 hlTextWriter *hltwCreateFromFile(struct hlFile *file);
 
+Bool hltwSetFlushMode(hlTextWriter *tw, enum hlTextStreamFlushMode mode);
+
 
 t_offset hltwSetPointer(hlTextWriter *tw, t_offset offset, enum hlStreamSeekMode mode);
 
 t_offset hltwGetPointer(hlTextWriter *tw);
 
+
+Bool hltwWriteCharA(hlTextWriter *tw, char ch);
 
 int hltwWriteA(hlTextWriter *tw, const char *chars);
 
@@ -70,11 +80,11 @@ Bool hltwRelease(hlTextWriter *tw);
 
 
 
-//------------------- File Reader ---------------------//
+//-------------------- Text Reader ---------------------//
 
 typedef struct
 {
-	struct hlWriteStream *stream;
+	struct hlReadStream *stream;
 
 	enum hlTextLineBreak line_break;
 	
@@ -82,14 +92,21 @@ typedef struct
 
 
 
-hlFileReader *hlfrCreate(struct hlFile *file);
+hlTextReader *hltrCreate(struct hlReadStream *rstream);
 
-t_size hlfrRead(hlFileReader *stream, void *buffer, t_size size);
-
-t_offset hlfrSetPointer(hlFileReader *fr, t_offset offset, enum hlStreamSeekMode mode);
-
-t_offset hlfrGetPointer(hlFileReader *fr);
-
-Bool hlfrRelease(hlFileReader *fr);
+hlTextReader *hltrCreateFromFile(struct hlFile *file);
 
 
+t_offset hltrSetPointer(hlTextReader *tr, t_offset offset, enum hlStreamSeekMode mode);
+
+t_offset hltrGetPointer(hlTextReader *tr);
+
+
+char hltrReadCharA(hlTextReader *tr);
+
+int hltrReadA(hlTextReader *tr, char *buffer, int size);
+
+int hltrReadLineA(hlTextReader *tr, char *buffer, int buffer_size);
+
+
+Bool hltrRelease(hlTextReader *fr);

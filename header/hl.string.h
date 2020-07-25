@@ -48,6 +48,8 @@ hlStringA *hlsaNew();
 
 hlStringA *hlsaNewCopy(const char *chars);
 
+//hlStringA *hlsaNewCopyLen(const char *chars);
+
 hlsaResult hlsaFree(hlStringA *str);
 
 hlsaResult hlsaCopyChars(hlStringA *str, const char *chars);

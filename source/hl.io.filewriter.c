@@ -6,6 +6,7 @@
 static const struct hlWriteStreamFC _hl_fc_stream_writer = 
 {
 	(t_size   (*)(struct hlWriteStream *, const void *, t_size)) hlfwWrite,
+	(Bool     (*)(struct hlWriteStream *, byte)) hlfwWriteByte,
 	(t_offset (*)(struct hlWriteStream *, t_offset, enum hlStreamSeekMode)) hlfwSetPointer,
 	(t_offset (*)(struct hlWriteStream *)) hlfwGetPointer,
 	(Bool (*)(struct hlWriteStream *)) hlfwFlush,
@@ -94,6 +95,24 @@ int hlfwWrite(hlFileWriter *fw, const void *data, int size)
 		fw->_stream_pos += size;
 		return size;
 	}
+}
+
+
+Bool hlfwWriteByte(hlFileWriter *fw, byte b)
+{
+	int offset = fw->_stream_pos - fw->_buffer_pos;
+	int space = fw->_buffer_capcity - offset;
+
+	//缓存已满, 写入文件
+	if(space <= 0)
+	{
+		_hlfw_flush(fw);
+		offset = 0;
+	}
+
+	fw->_buffer[offset] = b;
+	fw->_stream_pos++;
+	return TRUE;
 }
 
 

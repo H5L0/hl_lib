@@ -28,15 +28,17 @@ Bool hlcsInit()
 
 	//Create file.
 	//hlFile *f_stdout = hlfOpenStandard("");
-	hlFile *f_stdout = (hlFile*)hlmeNew(sizeof(hlFile));
+	hlFile *f_stdout = hlmeNewType(hlFile);
 	f_stdout->id = 0;
 
-	//Create file writer.
-	//hlFileWriter *fw_stdout = hlfwCreate(f_stdout);
+	hlFile *f_stdin = hlmeNewType(hlFile);
+	f_stdin->id = 1;
 
 	//Create text writer from file writer.
 	hl_std_output = hltwCreateFromFile(f_stdout);
-	hl_std_output->flush_mode = em_tsflush_line;
+	hltwSetFlushMode(hl_std_output, em_tsflush_line);
+
+	hl_std_input = hltrCreateFromFile(f_stdin);
 
 	return TRUE;
 }
@@ -79,41 +81,25 @@ int hlcsWriteLineA(const char *format, ...)
 }
 
 
-/*
 
-char *hlcsReadLineNA()
+int hlcsReadA(char *buffer, int size)
 {
-	return 0;
+	if(size == 0) return 0;
+	int rcount = hltrReadA(hl_std_input, buffer, size - 1);
+	buffer[rcount + 1] = '\0';
+	return rcount;
 }
 
-int hlcsReadLineA(char *buffer, int bsize)
+int hlcsReadLineA(char *buffer, int buffer_size)
 {
-	--bsize;
-	int rcount = 0;
-	char ch;
-	do
-	{
-		int rs =  hl_file_read(1, &ch, 1);
-		//if(rs == -1)
-
-		if(ch == '\n') break;
-
-		buffer[rcount++] = ch;
-	} while (rcount != bsize);		//应该抛弃换行符前的字符吗
-
-	buffer[rcount] = '\0';
+	if(buffer_size == 0) return 0;
+	int rcount = hltrReadLineA(hl_std_input, buffer, buffer_size - 1);
+	buffer[rcount + 1] = '\0';
 	return rcount;
 }
 
 
 int hlcsReadChar()
 {
-	char ch;
-	int rcount = hl_file_read(1, &ch, 1);
-
-	if(rcount != 1) return 0;
-	else return ch;
+	return hltrReadCharA(hl_std_input);
 }
-
-
-*/

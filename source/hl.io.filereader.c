@@ -5,6 +5,7 @@
 static const struct hlReadStreamFC _hl_fc_stream_reader = 
 {
 	(t_size   (*)(struct hlReadStream *, void *, t_size)) hlfrRead,
+	(int      (*)(struct hlReadStream *)) hlfrReadByte,
 	(t_offset (*)(struct hlReadStream *, t_offset, enum hlStreamSeekMode)) hlfrSetPointer,
 	(t_offset (*)(struct hlReadStream *)) hlfrGetPointer,
 	(Bool     (*)(struct hlReadStream *)) NULL
@@ -139,6 +140,38 @@ t_size hlfrRead(hlFileReader *fr, void *buffer, t_size size)
 	else 
 	{
 		return _hlfr_read_raw(fr, buffer, size);
+	}
+}
+
+
+
+int _hlfr_read_raw_byte(hlFileReader *fr)
+{
+	int rn = hlfRead(fr->file, fr->_buffer, fr->_buffer_capcity);
+	//Read to end.
+	if(rn == 0) return -1;
+
+	int result = *(fr->_buffer);
+
+	fr->_buffer_start = fr->_stream_pos;
+	fr->_buffer_end = fr->_buffer_start + rn;
+	fr->_stream_pos ++;
+	return result;
+}
+
+
+int hlfrReadByte(hlFileReader *fr)
+{
+	int offset = fr->_stream_pos - fr->_buffer_start;
+	int end = fr->_stream_pos - fr->_buffer_end;
+	if(offset >=0 && end < 0)
+	{
+		fr->_stream_pos++;
+		return fr->_buffer[offset];
+	}
+	else 
+	{
+		return _hlfr_read_raw_byte(fr);
 	}
 }
 

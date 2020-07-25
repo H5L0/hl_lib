@@ -1,4 +1,4 @@
-
+#pragma once
 
 
 #define return_if_equal(value, exp, result) if(value == exp) return result

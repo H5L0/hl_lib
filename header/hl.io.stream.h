@@ -24,9 +24,26 @@ StreamWriter  StreamReader
 
 */
 
+/* IN USE:
+            Stream
+       /             \
+  StreamWriter  StreamReader
+     |                |
+ FileWriter      FileReader
 
-struct hlWriteStream;
-struct hlReadStream;
+  StreamWriter -> FileWriter
+      |
+  TextWriter
+
+  StreamReader -> FileReader
+      |
+  TextReader
+
+*/
+
+
+typedef struct hlWriteStream hlWriteStream;
+typedef struct hlReadStream hlReadStream;
 
 
 enum hlStreamSeekMode
@@ -41,6 +58,9 @@ enum hlStreamSeekMode
 struct hlWriteStreamFC
 {
 	t_size (*Write)(struct hlWriteStream *, const void *data, t_size size);
+
+	Bool (*WriteByte)(struct hlWriteStream *, byte);
+
 	//t_size (*DirectWrite)(struct hlWriteStream *, void *data, t_size size);
 
 	t_offset (*SetPointer)(struct hlWriteStream *, t_offset, enum hlStreamSeekMode);
@@ -54,18 +74,12 @@ struct hlWriteStreamFC
 	Bool (*Release)(struct hlWriteStream *);
 };
 
-//hlStreamWriter
-struct hlWriteStream
-{
-	const struct hlWriteStreamFC *fc;
-};
-
-
-
 
 struct hlReadStreamFC
 {
 	t_size (*Read)(struct hlReadStream *stream, void *buffer, t_size size);
+
+	int (*ReadByte)(struct hlReadStream *);
 
 	t_offset (*SetPointer)(struct hlReadStream *, t_offset, enum hlStreamSeekMode);
 
@@ -75,6 +89,15 @@ struct hlReadStreamFC
 
 	Bool (*Release)(struct hlReadStream *);
 };
+
+
+
+//hlStreamWriter
+struct hlWriteStream
+{
+	const struct hlWriteStreamFC *fc;
+};
+
 
 //hlStreamReader
 struct hlReadStream

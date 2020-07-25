@@ -7,6 +7,10 @@
 
 #define BIT(n) (1 << n)
 
+#define SET_BIT(value, n) (value |= (1 << n))
+#define CLEAR_BIT(value, n) (value &= ~(1 << n))
+
+
 
 
 #define ISNULL(var) (var==0)

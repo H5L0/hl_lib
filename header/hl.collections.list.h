@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include <hl.type.h>
 #include <hl.type.class.h>

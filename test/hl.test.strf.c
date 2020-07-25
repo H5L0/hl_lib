@@ -5,7 +5,7 @@
 int hlStart()
 {
 
-	hlcsWriteA("----------\n", NULL, NULL);
+	hlcsWriteA("----------\n");
 
 	//void *args[] = {12, 1234};
 	//hlcsWriteA("[{0}] Print \"{:?=___--}\".\n", "i,ui", args);
@@ -23,8 +23,18 @@ int hlStart()
 
 	//hlcsWriteA("(Float) [{f:--.--___}]\n", 123.456f);
 
-	hlcsWriteA("----------\n", NULL, NULL);
+	hlcsWriteA("--Input------\n");
 
+	char buffer[8];
+	hlcsReadA(buffer, 8);
+
+	hlcsWriteLineA(buffer);
+
+	hlcsReadLineA(buffer, 8);
+
+	hlcsWriteLineA(buffer);
+
+	hlcsWriteLineA("----------");
 	return 0;
 }
 

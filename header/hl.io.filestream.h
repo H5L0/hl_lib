@@ -32,6 +32,8 @@ t_offset hlfwGetPointer(hlFileWriter *fw);
 
 int hlfwWrite(hlFileWriter *fw, const void *data, int size);
 
+Bool hlfwWriteByte(hlFileWriter *fw, byte b);
+
 Bool hlfwFlush(hlFileWriter *fw);
 
 Bool hlfwRelease(hlFileWriter *fw);
@@ -61,6 +63,8 @@ typedef struct
 hlFileReader *hlfrCreate(struct hlFile *file);
 
 t_size hlfrRead(hlFileReader *stream, void *buffer, t_size size);
+
+int hlfrReadByte(hlFileReader *fr);
 
 t_offset hlfrSetPointer(hlFileReader *fr, t_offset offset, enum hlStreamSeekMode mode);
 

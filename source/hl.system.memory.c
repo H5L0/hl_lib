@@ -65,6 +65,8 @@ void *hlmeResize(void *space, t_size newSize)
 	}
 	else
 	{
+		return FALSE;
+		/*
 		void *newSpace = hlmeNew(newSize);
 		return_null_if_null(newSpace);
 
@@ -74,6 +76,7 @@ void *hlmeResize(void *space, t_size newSize)
 		hlmeFree(space);
 		//if failed => hlmeFree(newSpace);
 		return newSpace;
+		*/
 	}
 }
 

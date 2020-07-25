@@ -8,7 +8,7 @@
 
 
 
-enum hlTextLineBreak _GetSystemLineBreak()
+enum hlTextLineBreak hlGetSystemLineBreak()
 {
 	return et_lbrk_linux;
 }
@@ -20,7 +20,7 @@ hlTextWriter *hltwCreate(struct hlWriteStream *wstream)
 	return_null_if_null(tw);
 
 	tw->stream = wstream;
-	tw->line_break = _GetSystemLineBreak();
+	tw->line_break = hlGetSystemLineBreak();
 	tw->flush_mode = em_tsflush_buffer;
 
 	return tw;
@@ -32,6 +32,13 @@ hlTextWriter *hltwCreateFromFile(struct hlFile *file)
 	hlFileWriter *filewriter = hlfwCreate(file);
 	return_null_if_null(filewriter);
 	return hltwCreate(&filewriter->stream);
+}
+
+
+Bool hltwSetFlushMode(hlTextWriter *tw, enum hlTextStreamFlushMode mode)
+{
+	tw->flush_mode = mode;
+	return TRUE;
 }
 
 
