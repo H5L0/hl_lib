@@ -8,25 +8,27 @@
 
 enum hlFileAccess
 {
-    e_fa_Read  = 0b001,
-    e_fa_Write = 0b010,
-    e_fa_RW    = 0b011,
-
-    //efaRead, efpUser
+	ef_Read  = 0b001,   //eFileAccess_Read
+	ef_Write = 0b010,
+	ef_RW    = 0b011,
 };
 
 enum hlFilePermission
 {
-    e_fp_User = 0,
-    e_fp_UserGroup = 1,
-    e_fp_Other = 2,
+	ef_pm_User = 0,
+	ef_pm_UserGroup = 1,
+	ef_pm_Other = 2,
 };
 
 enum hlFileSecurity
 {
-    e_io_User,
-    e_io_Group,
-    e_io_Other,
+	//e_io_User,
+	//e_io_Group,
+	//e_io_Other,
+
+	ef_sec_User  = 0,
+	ef_sec_Group = 1,
+	ef_sec_Other = 2,
 };
 
 //--------------------- File System ----------------------//
@@ -58,11 +60,13 @@ int hlfWrite(struct hlFile *file, const void *data, int length);
 
 enum hlFileSeekMode
 {
-    e_fseek_start = 0,
-    e_fseek_offset = 1,
-    e_fseek_end = 2,
-    e_fseek_data,
-    e_fseek_hole,
+	ef_seek_Start = 0,  //eFileSeekMode_Start
+	ef_seek_Offset = 1,
+	ef_seek_End = 2,
+	ef_seek_Data = -1,
+	ef_seek_Hole = -1,
+
+	//efSeekStart
 };
 
 //失败返回-1

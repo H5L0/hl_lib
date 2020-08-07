@@ -1,10 +1,10 @@
 #include <hl.io.textstream.h>
-#include <hl.system.memory.h>
+#include <hl.io.filestream.h>
 
 #include <hl.chars.h>
 #include <hl.chars.format.h>
 
-#include <hl.macro.vargs.h>
+#include <hl.system.memory.h>
 
 
 
@@ -14,6 +14,7 @@ enum hlTextLineBreak hlGetSystemLineBreak()
 }
 
 
+
 hlTextWriter *hltwCreate(struct hlWriteStream *wstream)
 {
 	hlTextWriter *tw = hlmeNewType(hlTextWriter);
@@ -21,11 +22,10 @@ hlTextWriter *hltwCreate(struct hlWriteStream *wstream)
 
 	tw->stream = wstream;
 	tw->line_break = hlGetSystemLineBreak();
-	tw->flush_mode = em_tsflush_buffer;
+	tw->flush_mode = ets_flush_Buffer;
 
 	return tw;
 }
-
 
 hlTextWriter *hltwCreateFromFile(struct hlFile *file)
 {
@@ -42,12 +42,33 @@ Bool hltwSetFlushMode(hlTextWriter *tw, enum hlTextStreamFlushMode mode)
 }
 
 
-t_offset hltwSetPointer(hlTextWriter *tw, t_offset offset, enum hlStreamSeekMode mode);
-
-
-t_offset hltwGetPointer(hlTextWriter *tw)
+Bool hltwFlush(hlTextWriter *tw)
 {
-	return tw->stream->fc->GetPointer(tw->stream);
+	return tw->stream->fc->Flush(tw->stream);
+}
+
+
+Bool hltwRelease(hlTextWriter *tw)
+{
+	return_false_if_false(hltwFlush(tw));
+
+	//**Relesed Source Stream Here !!!
+	return_false_if_false(tw->stream->fc->Release(tw->stream));
+
+	return hlmeFree(tw);
+}
+
+
+
+t_offset hltrSetPointer(hlTextReader *tr, t_offset offset, enum hlStreamSeekMode mode)
+{
+	return tr->stream->fc->SetPointer(tr->stream, offset, mode);
+}
+
+
+t_offset hltrGetPointer(hlTextReader *tr)
+{
+	return tr->stream->fc->GetPointer(tr->stream);
 }
 
 
@@ -64,7 +85,7 @@ int _FindLastLineBreak(const char *chars, int length)
 
 int _hltw_write(hlTextWriter *tw, const char *chars, int length)
 {
-	if(tw->flush_mode == em_tsflush_line)
+	if(tw->flush_mode == ets_flush_Line)
 	{
 		int line_break = _FindLastLineBreak(chars, length);
 		if(line_break != -1)
@@ -135,20 +156,3 @@ int hltwWriteLineFormatVA(hlTextWriter *tw, const char *format, va_list list)
 	return _hltw_write(tw, buffer, count);
 }
 
-
-
-Bool hltwFlush(hlTextWriter *tw)
-{
-	return tw->stream->fc->Flush(tw->stream);
-}
-
-
-Bool hltwRelease(hlTextWriter *tw)
-{
-	return_false_if_false(hltwFlush(tw));
-
-	//**Relesed Source Stream Here !!!
-	return_false_if_false(tw->stream->fc->Release(tw->stream));
-
-	return hlmeFree(tw);
-}

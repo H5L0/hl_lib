@@ -62,7 +62,7 @@ int _hlfw_flush(hlFileWriter *fw)
 
 int hlfwWrite(hlFileWriter *fw, const void *data, int size)
 {
-	int offset = fw->_stream_pos - fw->_buffer_pos;
+	int offset = fw->_stream_pos - fw->_buffer_pos; //*offset > 0, otherwise buffer may overflow.
 	int w1 = fw->_buffer_capcity - offset;
 
 	//a.缓存充足
@@ -118,13 +118,17 @@ Bool hlfwWriteByte(hlFileWriter *fw, byte b)
 
 t_offset hlfwSetPointer(hlFileWriter *fw, t_offset offset, enum hlStreamSeekMode mode)
 {
-	t_offset newPos = hlfSeek(fw->file, offset, mode);
-
-	//t_addr bstart = fw->_buffer_pos;
-	//t_addr bend = bstart + fw->_buffer_capcity;
+	enum hlFileSeekMode fsmode  = mode;
+	t_offset newPos = hlfSeek(fw->file, offset, fsmode);
 	
 	//_____[#######!__]____
 	//_____[####!xxx__]____ < 为了防止之前写入的内容未写入, 只要改变位置都会写缓存.
+
+	if(newPos < 0)
+	{
+		//newPos  = hlfSeek(fw->file, 0, ef_seek_End);
+		return -1;
+	}
 
 	if(newPos != fw->_stream_pos)
 	{

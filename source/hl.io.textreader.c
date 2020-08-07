@@ -1,12 +1,10 @@
-
 #include <hl.io.textstream.h>
-#include <hl.system.memory.h>
+#include <hl.io.filestream.h>
 
 #include <hl.chars.h>
 #include <hl.chars.format.h>
 
-#include <hl.macro.vargs.h>
-
+#include <hl.system.memory.h>
 
 
 hlTextReader *hltrCreate(struct hlReadStream *rstream)
@@ -35,6 +33,20 @@ Bool hltrRelease(hlTextReader *tr)
 
 	return hlmeFree(tr);
 }
+
+
+
+t_offset hltwSetPointer(hlTextWriter *tw, t_offset offset, enum hlStreamSeekMode mode)
+{
+	return tw->stream->fc->SetPointer(tw->stream, offset, mode);
+}
+
+
+t_offset hltwGetPointer(hlTextWriter *tw)
+{
+	return tw->stream->fc->GetPointer(tw->stream);
+}
+
 
 
 

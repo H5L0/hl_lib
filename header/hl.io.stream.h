@@ -48,9 +48,9 @@ typedef struct hlReadStream hlReadStream;
 
 enum hlStreamSeekMode
 {
-	e_sseek_start = 0,
-	e_sseek_offset = 1,
-	e_sseek_end = 2,
+	es_seek_Start = 0,
+	es_seek_Offset = 1,
+	es_seek_End = 2,
 };
 
 

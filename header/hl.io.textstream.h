@@ -1,4 +1,5 @@
-#include <hl.io.filestream.h>
+#include <hl.io.file.h>
+#include <hl.io.stream.h>
 #include <hl.macro.vargs.h>
 
 //...hl.io.stream.text.h
@@ -26,8 +27,8 @@ enum hlTextLineBreak hlGetSystemLineBreak();
 
 enum hlTextStreamFlushMode
 {
-	em_tsflush_buffer,
-	em_tsflush_line,
+	ets_flush_Buffer,
+	ets_flush_Line,
 };
 
 

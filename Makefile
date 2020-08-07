@@ -28,6 +28,7 @@ CFILE_COM = \
  hl.io.filereader.c\
  hl.io.textwriter.c\
  hl.io.textreader.c\
+ hl.io.standard.c\
  hl.io.console.c
 
 
@@ -72,7 +73,7 @@ OFILES = $(patsubst %c, %o, $(CFILES)) $(patsubst %s, %o, $(ASMFILES))
 
 $(TARGET): $(OFILES)
 	@$(CC) $(LFLAGS) $(OFILES) -o $(TARGET)
-	@rm -fr -v $(OFILES)
+#@rm -fr -v $(OFILES)
 	@echo ==== Compile Success ====
 
 #@echo ==== Running: $(TARGET) =====

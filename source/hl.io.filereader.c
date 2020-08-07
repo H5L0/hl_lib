@@ -181,15 +181,15 @@ t_offset hlfrSetPointer(hlFileReader *fr, t_offset offset, enum hlStreamSeekMode
 {
 	t_offset newPos;
 
-	if(mode == e_sseek_start)
+	if(mode == es_seek_Start)
 	{
 		newPos = offset;
 	}
-	else if(mode == e_sseek_offset)
+	else if(mode == es_seek_Offset)
 	{
 		newPos = fr->_stream_pos + offset;
 	}
-	else if(mode == e_sseek_end)
+	else if(mode == es_seek_End)
 	{
 		//**fileSize 不准确
 		newPos = hlfGetSize(fr->file) - offset;
@@ -197,7 +197,7 @@ t_offset hlfrSetPointer(hlFileReader *fr, t_offset offset, enum hlStreamSeekMode
 
 	if(newPos < fr->_buffer_start || newPos >= fr->_buffer_end)
 	{
-		newPos = hlfSeek(fr->file, newPos, e_fseek_start);
+		newPos = hlfSeek(fr->file, newPos, ef_seek_Start);
 	}
 
 	fr->_stream_pos = newPos;

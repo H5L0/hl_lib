@@ -1,5 +1,5 @@
 #include <hl.io.console.h>
-
+#include <hl.io.standard.h>
 
 
 int hlStart()
@@ -25,6 +25,7 @@ int hlStart()
 
 	hlcsWriteA("--Input------\n");
 
+	/*
 	char buffer[8];
 	hlcsReadA(buffer, 8);
 
@@ -33,6 +34,13 @@ int hlStart()
 	hlcsReadLineA(buffer, 8);
 
 	hlcsWriteLineA(buffer);
+	*/
+
+	//hltwSetPointer(hl_std_output, 16, es_seek_Start);
+
+	hlcsWriteA("\033[%1A");
+
+	hlcsWriteLineA("*Insert*");
 
 	hlcsWriteLineA("----------");
 	return 0;
