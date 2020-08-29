@@ -1,18 +1,17 @@
 #pragma once
 #include <hl.type.h>
+#include <hl.macro.flow.h>
 
-//#可以把这个放入hl.macro.h
-#define return_if_null(pointer) if(pointer==NULL) return
-#define return_null_if_null(pointer) if(pointer==NULL) return NULL
-#define return_false_if_null(pointer) if(pointer==NULL) return NULL
-#define return_false_if_false(expr) if(expr == FALSE) return FALSE
+//hl.memory.management.h
+//=> hlmmNew() hlmmCopy() hlmLogE() hlmDivide() hlmTanD()
+//=> hlmNew() hlmFree() hlLogE() hlSinf() hlAbsD()
 
 
 #define ATT_MFUNC __attribute__((malloc))
 #define ATT_NOMO __attribute__((optimize("-fno-tree-loop-distribute-patterns")))
 
+
 //--------------------------- Memory Allcation ------------------------------//
-//=> hlmmNew() hlmmCopy
 
 void *hlmeNew(t_size size) ATT_MFUNC;
 
@@ -42,14 +41,11 @@ void *hlmeResize(void *space, t_size newSize);
 Bool hlmeResizeOnly(void *space, t_size newSize);
 
 
+Bool hlmeFree(void *space);
 
-
-Bool hlmeFree(void *space);	//return bool?
-
-#define HLME_TRYFREE(space) if(space != NULL) hlmeFree(space);
+//#define HLME_TRYFREE(space) if(space != NULL) hlmeFree(space);
 
 //Bool hlmeTryFree(void *space);
-
 
 
 //---------------------------- Memory Function ---------------------------//

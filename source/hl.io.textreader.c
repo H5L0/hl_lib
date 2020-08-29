@@ -4,7 +4,7 @@
 #include <hl.chars.h>
 #include <hl.chars.format.h>
 
-#include <hl.system.memory.h>
+#include <hl.memory.h>
 
 
 hlTextReader *hltrCreate(struct hlReadStream *rstream)

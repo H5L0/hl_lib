@@ -2,7 +2,7 @@
 
 #include <hl.string.h>
 #include <hl.chars.h>
-#include <hl.system.memory.h>
+#include <hl.memory.h>
 
 
 bool _hlsaResize(hlStringA *str, int newLength)

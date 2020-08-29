@@ -35,4 +35,4 @@ sreg hl_file_seek(int fd, sreg offset, int mode)
 	return sys_seek(fd, offset, mode);
 }
 
-int hl_file_flush();
+//int hl_file_flush();

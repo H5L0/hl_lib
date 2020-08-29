@@ -3,6 +3,10 @@
 #include <hl.macro.bit.h>
 
 //**改名为hl.os.io.h
+//**hl.base.io.h <-> hl.linux.io.c
+//**hl.core.io.h <-> hl.linux.core.io.c
+//**hl.api.io.h  <-> hl.linux.api.io.c
+//**hl.in.io.h   <-> hl.in.io.linux.c    <-> hl.linux.in.io.c
 
 
 enum hlkFileAccessFlag
@@ -32,6 +36,8 @@ enum hlkFileAccessFlag
 
 	//hlFileAccessFlag_Text = 0x4000, //翻译CR-LF控制字符
 	//hlFileAccessFlag_Binary = 0x8000,
+
+	//ekf_access_(my_flag)
 };
 
 enum hlkFileCreateFlag
@@ -57,27 +63,28 @@ enum hlkFileCreateFlag
 	ek_fcF_Default = ek_fcF_R | ek_fcF_W | ek_fcF_R_O | ek_fcF_W_O,
 };
 
-int hl_file_open(const char *path, enum hlkFileAccessFlag access, enum hlkFileCreateFlag flags);
-
-//失败返回-1, 成功返回0
-int hl_file_close(int fd);
 
 
-int hl_file_rename();
-
-
-struct hl_stime
+struct hl_ftime
 {
 	s64 seconds;
-	u32 nanoseconds;
-	u32 __padding_32;
+	union
+	{
+		//10^-9s
+		u64 nanoseconds;
+		struct 
+		{
+			u32 nanoseconds_u32;
+			u32 __padding_32; //仅对小段模式有效
+		};
+	};
 };
 
 /*
 [00] 07 08 00 00 00 00 00 00 divice      64
 [01] 7d 8d 01 00 00 00 00 00 ino         64
-[02] 01 00 00 00 00 00 00 00 mode  nlink 32
-[03] ff 81 00 00 e8 03 00 00 uid   gid   32
+[02] 01 00 00 00 00 00 00 00 mode |nlink 32
+[03] ff 81 00 00 e8 03 00 00 uid  |gid   32
 [04] e8 03 00 00 00 00 00 00 rdev?
 [05] 00 00 00 00 00 00 00 00 padding?
 [06] 09 00 00 00 00 00 00 00 size        64
@@ -111,26 +118,38 @@ struct hl_stat
 
 	u64 block_count;/* Number 512-byte blocks allocated. */
 
-	struct hl_stime atime; /* Time of last access.  */
-	struct hl_stime mtime; /* Time of last modification.  */
-	struct hl_stime ctime; /* Time of last status change.  */
+	struct hl_ftime atime; /* Time of last access.  */
+	struct hl_ftime mtime; /* Time of last modification.  */
+	struct hl_ftime ctime; /* Time of last status change.  */
 
-	u32 __unused[32];
+	u32 __unused[16];
 };
 
 
 
+//打开文件
+//#目前是对linux系统调用的简单封装
+int hl_file_open(const char *path, enum hlkFileAccessFlag access, enum hlkFileCreateFlag flags);
+
+//关闭文件
+//失败返回-1, 成功返回0
+int hl_file_close(int fd);
+
+//int hl_file_rename();
+
+//hl_file_quiry();
 //这个函数保证使用最新的stat函数, 结果为64位.
 //失败返回-1
 int hl_file_get_info(int fd, struct hl_stat *finfo);
 
-
+//移动文件指针
 //失败返回-1, 成功返回新位置
 sreg hl_file_seek(int fd, sreg offset, int mode);
 
-
+//文件写入
 int hl_file_write(int fd, const void *data, int size);
 
+//文件读取
 int hl_file_read(int fd, void *buffer, int size);
 
-int hl_file_flush();
+//int hl_file_flush();

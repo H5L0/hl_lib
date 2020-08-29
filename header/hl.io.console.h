@@ -36,6 +36,10 @@ Bool hlcsTryReadInt(char *pint);
 float hlcsTryReadFloat(char *pfloat);
 
 
+/*---- TODO: 尝试加入控制台高级功能(更改指针位置/更改窗口大小/更改文字属性) ----*/
+
+//hlcsSetWindowSize()
+//hlcsSetBufferSize()
 Bool hlcsSetSize(int w, int h);
 
 Bool hlcsGetSize(int *pw, int *ph);

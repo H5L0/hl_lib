@@ -1,8 +1,26 @@
 #pragma once
 #include <hl.type.h>
-#include <hl.macro.bit.h>
+//#include <hl.macro.bit.h>
 #include <hl.io.path.h>
 #include <hl.io.fileinfo.h>
+
+//hl.fs.path.h
+//hl.fs.file.h     <-只定义结构和枚举
+//hl.fs.folder.h
+//hl.fs.file.io.h
+//hl.fs.manager.h  <-可以操作文件: 创建/删除/移动/复制/重命名/链接
+
+//hl.file.system.h
+//hl.file.manager
+//hl.file.io.h    x
+//hl.file.path.h  x
+//hl.file.folder.h
+
+//    path
+//(file...info...date...time...)
+// file  folder
+//  manager
+
 
 //-------------------------- File Structure-------------------------//
 
@@ -60,9 +78,9 @@ int hlfWrite(struct hlFile *file, const void *data, int length);
 
 enum hlFileSeekMode
 {
-	ef_seek_Start = 0,  //eFileSeekMode_Start
+	ef_seek_Start  = 0,  //eFileSeekMode_Start
 	ef_seek_Offset = 1,
-	ef_seek_End = 2,
+	ef_seek_End    = 2,
 	ef_seek_Data = -1,
 	ef_seek_Hole = -1,
 

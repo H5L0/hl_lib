@@ -1,5 +1,4 @@
-
-
+#pragma once
 #include <hl.type.h>
 
 
@@ -20,8 +19,5 @@ void *hl_memory_alloc(t_size size);
 bool hl_memory_resize(void *space, t_size size);
 
 bool hl_memory_free(void *space);
-
-
-
 
 

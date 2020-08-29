@@ -13,7 +13,7 @@ CFILE_TEST = test/hl.test.strf.c
 
 CFILE_COM = \
  hl.startup.c\
- hl.system.memory.c\
+ hl.memory.c\
  hl.chars.c\
  hl.chars.format.c\
  hl.chars.format.int.c\

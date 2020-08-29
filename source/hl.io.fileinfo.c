@@ -1,15 +1,15 @@
 #include <hl.io.fileinfo.h>
 //#include <hl.string.h>
 #include <hl.kernel.io.h>
-#include <hl.system.memory.h>
+#include <hl.memory.h>
 
-#include <stdio.h>
+//#include <stdio.h>
 
 
 
-u64 _hl_stime_to_u64(struct hl_stime *stime)
+u64 _hl_ftime_to_u64(struct hl_ftime *ftime)
 {
-	u64 t = (u64)stime->seconds * 1000000000 + stime->nanoseconds;
+	u64 t = (u64)ftime->seconds * 1000000000 + ftime->nanoseconds;
 	return t;
 }
 
@@ -34,9 +34,9 @@ struct hlFileInfo *hlfGetLatestInfo(hlFile *file)
 	info->gid = stat.gid;
 	info->block_size = stat.block_size;
 	info->size = stat.size;
-	info->time_create = _hl_stime_to_u64(&stat.ctime);
-	info->time_modify = _hl_stime_to_u64(&stat.mtime);
-	info->time_access = _hl_stime_to_u64(&stat.atime);
+	info->time_create = _hl_ftime_to_u64(&stat.ctime);
+	info->time_modify = _hl_ftime_to_u64(&stat.mtime);
+	info->time_access = _hl_ftime_to_u64(&stat.atime);
 	return info;
 }
 

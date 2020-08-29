@@ -1,6 +1,6 @@
 #include <hl.io.file.h>
 #include <hl.io.standard.h>
-#include <hl.system.memory.h>
+#include <hl.memory.h>
 
 
 hlTextWriter *hl_std_output = NULL;   //stream hl_output
@@ -11,7 +11,7 @@ hlTextWriter *hl_std_error = NULL;    //stream hl_error
 
 Bool hlInitStdOutputStream()
 {
-	if(hl_std_output == NULL) return FALSE;
+	if(hl_std_output != NULL) return FALSE;
 
 	//hlFile *f_stdout = hlfOpenStandard("");
 	hlFile *f_stdout = hlmeNewType(hlFile);
@@ -26,7 +26,7 @@ Bool hlInitStdOutputStream()
 
 Bool hlInitStdInputStream()
 {
-	if(hl_std_input == NULL) return FALSE;
+	if(hl_std_input != NULL) return FALSE;
 
 	hlFile *f_stdin = hlmeNewType(hlFile);
 	f_stdin->id = 1;
@@ -38,7 +38,7 @@ Bool hlInitStdInputStream()
 
 Bool hlInitStdErrorStream()
 {
-	return FALSE;
+	return TRUE;
 }
 
 

@@ -1,20 +1,22 @@
+#pragma once
+#include <hl.type.h>
 
 
 struct hlDate
 {
-	u16 year;		//A.D. 0-65535
-	u8 month;		//12M
-	u8 day;			//28-31D
-	u8 hour;		//24h
-	u8 minute;		//60m
-	u8 second;		//60s
+	u16 year;       // A.D. 0-65535
+	u8 month;       // 12M
+	u8 day;         // 28-31D
+	u8 hour;        // 24h
+	u8 minute;      // 60m
+	u8 second;      // 60s
 	u8 centisecond; // 1/100s
 };
 
 /*
 struct hlDateNS
 {
-	u16 year;  //A.D. 0-65535
+	u16 year;  //A.D. 0-65535 (s16?)
 	u8 month;  //12M
 	u8 day;	   //28-31D
 	u8 hour;   //24h
@@ -25,6 +27,7 @@ struct hlDateNS
 };
 */
 
+#if 0
 struct hlDate _hl_time64_to_date(u64 time64)
 {
 	struct hlDate date;
@@ -41,3 +44,4 @@ struct hlDate _hl_time64_to_date(u64 time64)
 
 	return date;
 }
+#endif

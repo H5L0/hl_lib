@@ -5,7 +5,7 @@
 int hlStart()
 {
 
-	hlcsWriteA("----------\n");
+	hlcsWriteA("*----------*\n");
 
 	//void *args[] = {12, 1234};
 	//hlcsWriteA("[{0}] Print \"{:?=___--}\".\n", "i,ui", args);
@@ -42,7 +42,7 @@ int hlStart()
 
 	hlcsWriteLineA("*Insert*");
 
-	hlcsWriteLineA("----------");
+	hlcsWriteLineA("*----------*");
 	return 0;
 }
 

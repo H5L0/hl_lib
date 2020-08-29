@@ -1,5 +1,5 @@
-#include <hl.system.memory.buffer.h>
-#include <hl.system.memory.h>
+#include <hl.memory.buffer.h>
+#include <hl.memory.h>
 
 
 //...hlmbInit()

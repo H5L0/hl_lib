@@ -10,7 +10,7 @@ extern hlTextWriter *hl_std_error;    //stream hl_error
 
 Bool hlInitStdStreams();
 
-hlTextWriter *hlGetStdOutputStream();
-hlTextReader *hlGetStdInputStream();
-hlTextWriter *hlGetStdErrorStream();
+//hlTextWriter *hlGetStdOutputStream();
+//hlTextReader *hlGetStdInputStream();
+//hlTextWriter *hlGetStdErrorStream();
 

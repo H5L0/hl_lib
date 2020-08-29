@@ -8,7 +8,7 @@
 
 bool _hlcs_have_init = FALSE;
 
-
+//hl_console_init();
 Bool hlcsInit()
 {
 	if(_hlcs_have_init)
@@ -17,7 +17,7 @@ Bool hlcsInit()
 	}
 	else
 	{
-		_hlcs_have_init = hlInitStdStreams();
+		_hlcs_have_init = hlInitStdStreams(); //hlstdInitStreams()? hl_std_stream_init(); hl_stdio_init();
 		return _hlcs_have_init;
 	}
 }

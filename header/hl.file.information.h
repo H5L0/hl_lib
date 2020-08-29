@@ -1,8 +1,7 @@
 #pragma once
 #include <hl.type.h>
-#include <hl.io.path.h>
+#include <hl.file.structure.h>
 
-//typedef t_size hlFileSize;
 
 struct hlFileInfo
 {
@@ -17,16 +16,6 @@ struct hlFileInfo
 	u64 time_access;
 };
 
-typedef u32 hlFileID;
-
-struct hlFile
-{
-	hlFileID id;
-	const struct hlPath *path;
-	struct hlFileInfo *info;
-};
-
-typedef struct hlFile hlFile;
 
 struct hlFileInfo *hlfGetLatestInfo(struct hlFile *file);
 
@@ -43,3 +32,4 @@ u32 hlfGetBlockSize(struct hlFile *file);
 
 //Is the modification time of file_new newer that file_old ?
 bool hlfCompareModifyTime(struct hlFile *file_new, struct hlFile *file_old);
+

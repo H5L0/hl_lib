@@ -6,6 +6,7 @@
 
 struct hlMemoryBuffer
 {
+	//hlList
 	void *space;
 	int count;
 	int capcity;

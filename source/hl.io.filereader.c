@@ -1,5 +1,5 @@
 #include <hl.io.filestream.h>
-#include <hl.system.memory.h>
+#include <hl.memory.h>
 
 
 static const struct hlReadStreamFC _hl_fc_stream_reader = 

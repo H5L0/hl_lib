@@ -1,6 +1,6 @@
 #include <hl.io.file.h>
 #include <hl.kernel.io.h>
-#include <hl.system.memory.h>
+#include <hl.memory.h>
 #include <hl.string.h>
 
 

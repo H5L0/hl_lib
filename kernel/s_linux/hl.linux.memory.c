@@ -1,7 +1,5 @@
-
 #include <hl.kernel.memory.h>
 #include <hl.linux.syscall.h>
-
 
 
 struct Area
